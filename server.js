@@ -15,6 +15,11 @@ const io = new Server(server, {
 
 const rooms = {}; // roomId => [ { id, name, avatar } ]
 
+// ✅ เพิ่มเส้นทาง root สำหรับ Render ตรวจสอบ
+app.get('/', (req, res) => {
+  res.send('UNO server is running.');
+});
+
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
@@ -44,4 +49,3 @@ io.on('connection', (socket) => {
 
 const PORT = process.env.PORT;
 server.listen(PORT, () => console.log(`✅ Server running on Render PORT: ${PORT}`));
-
