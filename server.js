@@ -5,17 +5,22 @@ const { Server } = require('socket.io');
 const cors = require('cors');
 
 const app = express();
+app.use(cors({
+  origin: 'https://nightstar2381.github.io',
+  methods: ['GET', 'POST']
+}));
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: 'https://nightstar2381.github.io',
     methods: ['GET', 'POST']
   }
 });
 
 const rooms = {}; // roomId => [ { id, name, avatar } ]
 
-// ✅ เพิ่มเส้นทาง root สำหรับ Render ตรวจสอบ
+// ✅ สำหรับให้ Render ตรวจสอบว่ายัง online
 app.get('/', (req, res) => {
   res.send('UNO server is running.');
 });
@@ -36,7 +41,6 @@ io.on('connection', (socket) => {
     rooms[roomId].push(player);
     socket.join(roomId);
 
-    // Notify all players in the room
     io.to(roomId).emit('player-list', rooms[roomId]);
 
     socket.on('disconnect', () => {
