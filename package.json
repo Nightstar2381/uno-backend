@@ -1,8 +1,8 @@
 {
   "name": "uno-server",
   "version": "1.0.0",
+  "description": "UNO Realtime Game Server",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
