@@ -1,7 +1,16 @@
-// server.js สำหรับระบบ UNO พร้อมจัดอันดับและป้องกันโกงชื่อซ้ำ/บันทึก
-
 const fs = require("fs");
-const io = require("socket.io")(server);
+const express = require("express");
+const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+http.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
 let rooms = {}; // room: { players: [], scores: {}, currentTurn: 0, topCard: {}, cards: {}, usernames: {} }
 
